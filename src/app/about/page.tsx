@@ -1,5 +1,6 @@
+import AboutSectionOne from "@/components/About/AboutSectionOne";
+import AboutSectionTwo from "@/components/About/AboutSectionTwo";
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import Contact from "@/components/Contact";
 
 import { Metadata } from "next";
 
@@ -8,17 +9,17 @@ export const metadata: Metadata = {
   description: "All in One AI Documentation Platform",
 };
 
-const ContactPage = () => {
+const AboutPage = () => {
   return (
     <>
       <Breadcrumb
-        pageName="Contact Page"
+        pageName="About Page"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
       />
-
-      <Contact />
+      <AboutSectionOne />
+      <AboutSectionTwo />
     </>
   );
 };
 
-export default ContactPage;
+export default AboutPage;
