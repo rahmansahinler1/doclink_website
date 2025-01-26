@@ -37,13 +37,13 @@ const AboutSectionOne = () => {
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
                     <List text="95% Accurate Answers" />
                     <List text="0% Hallucination" />
-                    <List text="Large Storage Capacity" />
+                    <List text="Large Capacity" />
                   </div>
 
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
                     <List text="Reusable Knowledge" />
                     <List text="User Friendly UI" />
-                    <List text="Instant support" />
+                    <List text="Secured Storage" />
                   </div>
                 </div>
               </div>
