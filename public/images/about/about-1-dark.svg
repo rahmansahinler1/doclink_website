@@ -1,0 +1,54 @@
+<svg viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Elements -->
+  <rect x="50" y="50" width="500" height="700" rx="20" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+  
+  <!-- Documentation Stack -->
+  <g transform="translate(100,100) scale(1.2)">
+    <rect x="0" y="0" width="160" height="200" rx="10" fill="#4A6CF7" opacity="0.1"/>
+    <rect x="10" y="10" width="160" height="200" rx="10" fill="#4A6CF7" opacity="0.2"/>
+    <rect x="20" y="20" width="160" height="200" rx="10" fill="#4A6CF7"/>
+    
+    <!-- Document Lines -->
+    <rect x="45" y="60" width="110" height="4" rx="2" fill="#1E293B"/>
+    <rect x="45" y="80" width="90" height="4" rx="2" fill="#1E293B"/>
+    <rect x="45" y="100" width="100" height="4" rx="2" fill="#1E293B"/>
+    <rect x="45" y="120" width="70" height="4" rx="2" fill="#1E293B"/>
+  </g>
+
+  <!-- Security Shield -->
+  <g transform="translate(340,100)">
+    <path d="M100,0 L200,40 L200,120 C200,200 150,240 100,280 C50,240 0,200 0,120 L0,40 Z" 
+          fill="#4A6CF7" opacity="0.1"/>
+    <path d="M100,20 L180,50 L180,120 C180,180 140,220 100,250 C60,220 20,180 20,120 L20,50 Z" 
+          fill="#4A6CF7"/>
+    <!-- Centered checkmark -->
+    <path d="M70,120 L95,145 L130,95" stroke="#1E293B" stroke-width="8" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Data Processing Box -->
+  <g transform="translate(150,400)">
+    <rect x="0" y="0" width="300" height="220" rx="15" fill="#4A6CF7" opacity="0.1"/>
+    <circle cx="40" cy="40" r="15" fill="#4A6CF7"/>
+    <circle cx="80" cy="40" r="15" fill="#4A6CF7" opacity="0.7"/>
+    <circle cx="120" cy="40" r="15" fill="#4A6CF7" opacity="0.4"/>
+    
+    <!-- Status Bars -->
+    <rect x="30" y="100" width="240" height="15" rx="7" fill="#4A6CF7" opacity="0.2"/>
+    <rect x="30" y="100" width="180" height="15" rx="7" fill="#4A6CF7"/>
+    
+    <rect x="30" y="140" width="240" height="15" rx="7" fill="#4A6CF7" opacity="0.2"/>
+    <rect x="30" y="140" width="140" height="15" rx="7" fill="#4A6CF7"/>
+    
+    <rect x="30" y="180" width="240" height="15" rx="7" fill="#4A6CF7" opacity="0.2"/>
+    <rect x="30" y="180" width="200" height="15" rx="7" fill="#4A6CF7"/>
+  </g>
+
+  <!-- Connecting Lines -->
+  <path d="M 300 350 Q 350 350, 400 400" stroke="#4A6CF7" stroke-width="3" fill="none"/>
+  <path d="M 300 370 Q 350 370, 400 420" stroke="#4A6CF7" stroke-width="3" fill="none"/>
+
+  <!-- Decorative Elements -->
+  <circle cx="100" cy="700" r="30" fill="#4A6CF7" opacity="0.1"/>
+  <circle cx="500" cy="150" r="40" fill="#4A6CF7" opacity="0.1"/>
+  <circle cx="300" cy="50" r="20" fill="#4A6CF7" opacity="0.1"/>
+</svg>
