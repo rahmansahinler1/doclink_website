@@ -5,29 +5,29 @@ import SingleTestimonial from "./SingleTestimonial";
 const testimonialData: Testimonial[] = [
   {
     id: 1,
-    name: "Musharof Chy",
-    designation: "Founder @TailGrids",
+    name: "Jack Hudson",
+    designation: "Researcher",
     content:
-      "Our members are so impressed. It's intuitive. It's clean. It's distraction free. If you're building a community.",
-    image: "/images/testimonials/auth-01.png",
+      "I used Doclink for my literature research, and it was great! It helped me find connections between my papers and saved me hours of time",
+    image: "/images/testimonials/researcher.png",
     star: 5,
   },
   {
     id: 2,
-    name: "Devid Weilium",
-    designation: "Founder @UIdeck",
+    name: "James Carter",
+    designation: "Financial Analyst",
     content:
-      "Our members are so impressed. It's intuitive. It's clean. It's distraction free. If you're building a community.",
-    image: "/images/testimonials/auth-02.png",
+      "Using DocLink has completely transformed the way I work. I no longer have to wait for files to open. I get the information I need just by asking.",
+    image: "/images/testimonials/finance_guy.png",
     star: 5,
   },
   {
     id: 3,
-    name: "Lethium Frenci",
-    designation: "Founder @Lineicons",
+    name: "Emily Johnson",
+    designation: "Student",
     content:
-      "Our members are so impressed. It's intuitive. It's clean. It's distraction free. If you're building a community.",
-    image: "/images/testimonials/auth-03.png",
+      "Doclink is like ChatGPT for students. I uploaded my textbook, notes, and slides, and it answers any question about them.",
+    image: "/images/testimonials/student.png",
     star: 5,
   },
 ];
@@ -38,7 +38,7 @@ const Testimonials = () => {
       <div className="container">
         <SectionTitle
           title="What Our Users Says"
-          paragraph="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
+          paragraph="We want to make your life easier ♥"
           center
         />
 
