@@ -8,7 +8,7 @@ const testimonialData: Testimonial[] = [
     name: "Jack Hudson",
     designation: "Researcher",
     content:
-      "I used Doclink for my literature research, and it was great! It helped me find connections between my papers and saved me hours of time",
+      'I used Doclink for my literature research. It helped me a lot to find connections between the papers and saved me hours of time."',
     image: "/images/testimonials/researcher.png",
     star: 5,
   },
@@ -17,7 +17,7 @@ const testimonialData: Testimonial[] = [
     name: "James Carter",
     designation: "Financial Analyst",
     content:
-      "Using DocLink has completely transformed the way I work. I no longer have to wait for files to open. I get the information I need just by asking.",
+      'Using Doclink has completely transformed the way I work. I no longer have to wait for files to open. I get the information I need just by asking."',
     image: "/images/testimonials/finance_guy.png",
     star: 5,
   },
@@ -26,7 +26,7 @@ const testimonialData: Testimonial[] = [
     name: "Emily Johnson",
     designation: "Student",
     content:
-      "Doclink is like ChatGPT for students. I uploaded my textbook, notes, and slides, and it answers any question about them.",
+      'Doclink is like ChatGPT for students. I uploaded my textbook, notes, and slides, and it answers every question about them."',
     image: "/images/testimonials/student.png",
     star: 5,
   },
@@ -38,7 +38,7 @@ const Testimonials = () => {
       <div className="container">
         <SectionTitle
           title="What Our Users Says"
-          paragraph="We want to make your life easier ♥"
+          paragraph="We want to change the way you interact with the information"
           center
         />
 

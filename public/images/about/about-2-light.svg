@@ -1,0 +1,33 @@
+<svg viewBox="0 0 500 480" xmlns="http://www.w3.org/2000/svg">
+  <!-- Large Document Icons -->
+  <g transform="translate(80,160)" opacity="0.2">
+    <rect x="0" y="0" width="100" height="140" rx="8" fill="#4A6CF7"/>
+    <line x1="20" y1="35" x2="80" y2="35" stroke="white" stroke-width="4"/>
+    <line x1="20" y1="60" x2="80" y2="60" stroke="white" stroke-width="4"/>
+    <line x1="20" y1="85" x2="60" y2="85" stroke="white" stroke-width="4"/>
+  </g>
+
+  <g transform="translate(320,120)" opacity="0.15">
+    <rect x="0" y="0" width="100" height="140" rx="8" fill="#4A6CF7"/>
+    <line x1="20" y1="35" x2="80" y2="35" stroke="white" stroke-width="4"/>
+    <line x1="20" y1="60" x2="80" y2="60" stroke="white" stroke-width="4"/>
+    <line x1="20" y1="85" x2="60" y2="85" stroke="white" stroke-width="4"/>
+  </g>
+
+  <g transform="translate(200,280)" opacity="0.18">
+    <rect x="0" y="0" width="100" height="140" rx="8" fill="#4A6CF7"/>
+    <line x1="20" y1="35" x2="80" y2="35" stroke="white" stroke-width="4"/>
+    <line x1="20" y1="60" x2="80" y2="60" stroke="white" stroke-width="4"/>
+    <line x1="20" y1="85" x2="60" y2="85" stroke="white" stroke-width="4"/>
+  </g>
+
+  <!-- Connection Points and Line -->
+  <circle cx="180" cy="240" r="12" fill="#4A6CF7" opacity="0.2"/>
+  <circle cx="320" cy="240" r="12" fill="#4A6CF7" opacity="0.2"/>
+  <line x1="180" y1="240" x2="320" y2="240" stroke="#4A6CF7" stroke-width="3" opacity="0.15"/>
+
+  <!-- Decorative Circles -->
+  <circle cx="80" cy="80" r="60" fill="#4A6CF7" opacity="0.05"/>
+  <circle cx="420" cy="380" r="70" fill="#4A6CF7" opacity="0.05"/>
+  <circle cx="250" cy="180" r="40" fill="#4A6CF7" opacity="0.05"/>
+</svg>
