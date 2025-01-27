@@ -1,98 +1,73 @@
-import SingleBlog from "@/components/Blog/SingleBlog";
-import blogData from "@/components/Blog/blogData";
-import Breadcrumb from "@/components/Common/Breadcrumb";
+import { Blog } from "@/types/blog";
+import Image from "next/image";
+import Link from "next/link";
 
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Doclink",
-  description: "All in One AI Documentation Platform",
-};
-
-const Blog = () => {
+const SingleBlog = ({ blog }: { blog: Blog }) => {
+  const { title, previewImage, paragraph, author, tags, publishDate, slug } = blog;
+  
   return (
     <>
-      <Breadcrumb
-        pageName="Blog Grid"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
-      />
-
-      <section className="pb-[120px] pt-[120px]">
-        <div className="container">
-          <div className="-mx-4 flex flex-wrap justify-center">
-            {blogData.map((blog) => (
-              <div
-                key={blog.id}
-                className="w-full px-4 md:w-2/3 lg:w-1/2 xl:w-1/3"
-              >
-                <SingleBlog blog={blog} />
-              </div>
-            ))}
+      <div className="group relative overflow-hidden rounded-sm bg-white shadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark">
+        <Link
+          href={`/blog/${slug}`}
+          className="relative block aspect-[37/22] w-full"
+        >
+          <span className="absolute right-6 top-6 z-20 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold capitalize text-white">
+            {tags[0]}
+          </span>
+          <div style={{ position: 'relative', width: '100%', height: '300px' }}>
+            <Image 
+              src={previewImage || '/images/placeholder.jpg'} // Added fallback
+              alt={title || 'Blog post image'}
+              layout="fill"
+              objectFit="cover"
+              width={800}
+              height={400}
+            />
           </div>
-
-          <div className="-mx-4 flex flex-wrap" data-wow-delay=".15s">
-            <div className="w-full px-4">
-              <ul className="flex items-center justify-center pt-8">
-                <li className="mx-1">
-                  <a
-                    href="#0"
-                    className="flex h-9 min-w-[36px] items-center justify-center rounded-md bg-body-color bg-opacity-[15%] px-4 text-sm text-body-color transition hover:bg-primary hover:bg-opacity-100 hover:text-white"
-                  >
-                    Prev
-                  </a>
-                </li>
-                <li className="mx-1">
-                  <a
-                    href="#0"
-                    className="flex h-9 min-w-[36px] items-center justify-center rounded-md bg-body-color bg-opacity-[15%] px-4 text-sm text-body-color transition hover:bg-primary hover:bg-opacity-100 hover:text-white"
-                  >
-                    1
-                  </a>
-                </li>
-                <li className="mx-1">
-                  <a
-                    href="#0"
-                    className="flex h-9 min-w-[36px] items-center justify-center rounded-md bg-body-color bg-opacity-[15%] px-4 text-sm text-body-color transition hover:bg-primary hover:bg-opacity-100 hover:text-white"
-                  >
-                    2
-                  </a>
-                </li>
-                <li className="mx-1">
-                  <a
-                    href="#0"
-                    className="flex h-9 min-w-[36px] items-center justify-center rounded-md bg-body-color bg-opacity-[15%] px-4 text-sm text-body-color transition hover:bg-primary hover:bg-opacity-100 hover:text-white"
-                  >
-                    3
-                  </a>
-                </li>
-                <li className="mx-1">
-                  <span className="flex h-9 min-w-[36px] cursor-not-allowed items-center justify-center rounded-md bg-body-color bg-opacity-[15%] px-4 text-sm text-body-color">
-                    ...
-                  </span>
-                </li>
-                <li className="mx-1">
-                  <a
-                    href="#0"
-                    className="flex h-9 min-w-[36px] items-center justify-center rounded-md bg-body-color bg-opacity-[15%] px-4 text-sm text-body-color transition hover:bg-primary hover:bg-opacity-100 hover:text-white"
-                  >
-                    12
-                  </a>
-                </li>
-                <li className="mx-1">
-                  <a
-                    href="#0"
-                    className="flex h-9 min-w-[36px] items-center justify-center rounded-md bg-body-color bg-opacity-[15%] px-4 text-sm text-body-color transition hover:bg-primary hover:bg-opacity-100 hover:text-white"
-                  >
-                    Next
-                  </a>
-                </li>
-              </ul>
+        </Link>
+        <div className="p-6 sm:p-8 md:px-6 md:py-8 lg:p-8 xl:px-5 xl:py-8 2xl:p-8">
+          <h3>
+            <Link
+              href={`/blog/${slug}`}
+              className="mb-4 block text-xl font-bold text-black hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl"
+            >
+              {title}
+            </Link>
+          </h3>
+          <p className="mb-6 border-b border-body-color border-opacity-10 pb-6 text-base font-medium text-body-color dark:border-white dark:border-opacity-10">
+            {paragraph}
+          </p>
+          <div className="flex items-center">
+            <div className="mr-5 flex items-center border-r border-body-color border-opacity-10 pr-5 dark:border-white dark:border-opacity-10 xl:mr-3 xl:pr-3 2xl:mr-5 2xl:pr-5">
+              <div className="mr-4">
+                <div className="relative h-10 w-10 overflow-hidden rounded-full">
+                  <Image 
+                    src={author.image || '/images/placeholder-author.jpg'}
+                    alt={`Author ${author.name}`}
+                    width={40}
+                    height={40}
+                  />
+                </div>
+              </div>
+              <div className="w-full">
+                <h4 className="mb-1 text-sm font-medium text-dark dark:text-white">
+                  By {author.name}
+                </h4>
+                <p className="text-xs text-body-color">{author.designation}</p>
+              </div>
+            </div>
+            <div className="inline-block">
+              <h4 className="mb-1 text-sm font-medium text-dark dark:text-white">
+                Date
+              </h4>
+              <p className="text-xs text-body-color">{publishDate}</p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 };
 
-export default Blog;
+export default SingleBlog;

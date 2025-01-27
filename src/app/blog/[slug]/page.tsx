@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import blogData from "@/components/Blog/blogData";
 import Image from "next/image";
-import TagButton from "@/components/Blog/TagButton";
-import SharePost from "@/components/Blog/SharePost";
 
 const SingleBlogPage = ({ params }: { params: { slug: string } }) => {
   const blog = blogData.find((blog) => blog.slug === params.slug);
@@ -21,7 +19,7 @@ const SingleBlogPage = ({ params }: { params: { slug: string } }) => {
                 {blog.title}
               </h2>
               
-              <div className="mb-10 flex flex-wrap items-center justify-between border-b border-body-color border-opacity-10 pb-4 dark:border-white dark:border-opacity-10">
+              <div className="mb-10 flex flex-wrap items-center border-b border-body-color border-opacity-10 pb-4 dark:border-white dark:border-opacity-10">
                 <div className="flex flex-wrap items-center">
                   <div className="mb-5 mr-10 flex items-center">
                     <div className="mr-4">
@@ -41,48 +39,27 @@ const SingleBlogPage = ({ params }: { params: { slug: string } }) => {
                     </div>
                   </div>
                 </div>
-                <div className="mb-5">
-                  {blog.tags.map((tag) => (
-                    <TagButton key={tag} text={tag} />
-                  ))}
-                </div>
               </div>
               
               <div className="blog-content">
+                <div className="mb-10 text-base font-medium leading-relaxed text-body-color">
+                  {blog.introText}
+                </div>
+
                 <div className="content mb-10 w-full overflow-hidden rounded">
-                  <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
+                  <div className="relative aspect-[16/9] w-full">
                     <Image
-                      src={blog.image}
+                      src={blog.fullImage}
                       alt={blog.title}
                       fill
-                      className="object-cover object-center"
+                      className="object-cover"
+                      priority={true}  // This will preload the image
                     />
                   </div>
                 </div>
                 
-                <div className="prose prose-lg dark:prose-invert max-w-none">
+                <div className="prose max-w-none text-base font-medium leading-relaxed text-body-color">
                   {blog.content}
-                </div>
-              </div>
-
-              <div className="items-center justify-between sm:flex">
-                <div className="mb-5">
-                  <h4 className="mb-3 text-sm font-medium text-body-color">
-                    Popular Tags :
-                  </h4>
-                  <div className="flex items-center">
-                    {blog.tags.map((tag) => (
-                      <TagButton key={tag} text={tag} />
-                    ))}
-                  </div>
-                </div>
-                <div className="mb-5">
-                  <h5 className="mb-3 text-sm font-medium text-body-color sm:text-right">
-                    Share this post :
-                  </h5>
-                  <div className="flex items-center sm:justify-end">
-                    <SharePost />
-                  </div>
                 </div>
               </div>
             </div>
