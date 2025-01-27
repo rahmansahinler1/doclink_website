@@ -11,8 +11,8 @@ const Pricing = () => {
     <section id="pricing" className="relative z-10 py-16 md:py-20 lg:py-28">
       <div className="container">
         <SectionTitle
-          title="Simple and Affordable Pricing"
-          paragraph="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
+          title="Pricing"
+          paragraph="Start for free to change your interaction with information. Interact all of your documentation from single platform."
           center
           width="665px"
         />
@@ -57,45 +57,59 @@ const Pricing = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-4 gap-y-10 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-6 2xl:gap-x-8">
           <PricingBox
-            packageName="Lite"
-            price={isMonthly ? "40" : "120"}
-            duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            packageName="Free"
+            price={isMonthly ? "0" : "0"}
+            duration={isMonthly ? "mo" : "mo"}
+            subtitle="Start experiencing Doclink.io right now."
           >
-            <OfferList text="All UI Components" status="active" />
-            <OfferList text="Use with Unlimited Projects" status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
-            <OfferList text="Lifetime Access" status="inactive" />
-            <OfferList text="Free Lifetime Updates" status="inactive" />
+            <OfferList text="20 Sources" status="active" />
+            <OfferList text="3 Knowledge Base" status="active" />
+            <OfferList text="50 Daily QA Limit" status="active" />
           </PricingBox>
           <PricingBox
-            packageName="Basic"
-            price={isMonthly ? "399" : "789"}
-            duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            packageName="Premium"
+            price={isMonthly ? "7.99" : "4.99"}
+            duration={isMonthly ? "mo" : "mo"}
+            subtitle="Increase your limits. Use anytime."
           >
-            <OfferList text="All UI Components" status="active" />
-            <OfferList text="Use with Unlimited Projects" status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
-            <OfferList text="Lifetime Access" status="active" />
-            <OfferList text="Free Lifetime Updates" status="inactive" />
+            <OfferList text="100 Sources" status="active" />
+            <OfferList text="10 Knowledge Base" status="active" />
+            <OfferList text="Limitless QA" status="active" />
+            <OfferList text="Source & Knowledge Base Summarization" status="active" />
+            <OfferList text="Personilzed Chat Storage" status="active" />
+            <OfferList text="Priority Support" status="active" />
           </PricingBox>
           <PricingBox
-            packageName="Plus"
-            price={isMonthly ? "589" : "999"}
-            duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            packageName="Pro"
+            price={isMonthly ? "14.99" : "9.99"}
+            duration={isMonthly ? "mo" : "mo"}
+            subtitle="Go deeper analysis. Use additional features."
           >
-            <OfferList text="All UI Components" status="active" />
-            <OfferList text="Use with Unlimited Projects" status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
-            <OfferList text="Lifetime Access" status="active" />
-            <OfferList text="Free Lifetime Updates" status="active" />
+            <OfferList text="200 Sources" status="active" />
+            <OfferList text="20 Knowledge Base" status="active" />
+            <OfferList text="Limitless QA" status="active" />
+            <OfferList text="Source & Knowledge Base Summarization" status="active" />
+            <OfferList text="Personilzed Chat Storage" status="active" />
+            <OfferList text="Prio Support Calls" status="active" />
+            <OfferList text="Automatic Reporting" status="active" />
+            <OfferList text="Information Comparison" status="active" />
+            <OfferList text="Source Sharing" status="active" />
+          </PricingBox>
+          <PricingBox
+            packageName="Enterprise"
+            price="Custom"
+            duration=""
+            subtitle="Customize the experience. Use with your team."
+            buttonText="Book a Meeting"
+          >
+            <OfferList text="Everything in Pro Plan Per User" status="active" />
+            <OfferList text="100 Person Limit" status="active" />
+            <OfferList text="On-Prem Integration" status="active" />
+            <OfferList text="24/7 Prio Customer Support" status="active" />
+            <OfferList text="Customizable Experience" status="active" />
+            <OfferList text="Share Within Your Organization" status="active" />
           </PricingBox>
         </div>
       </div>
