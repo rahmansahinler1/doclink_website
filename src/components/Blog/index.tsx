@@ -11,7 +11,7 @@ const Blog = () => {
       <div className="container">
         <SectionTitle
           title="Our Latest Blogs"
-          paragraph="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
+          paragraph="Dive deeply, learn more about Doclink.io and technology we use. We value the complete transparency and opensource."
           center
         />
 
