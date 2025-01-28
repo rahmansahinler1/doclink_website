@@ -9,7 +9,7 @@ const Features = () => {
         <div className="container">
           <SectionTitle
             title="Features"
-            paragraph="Transform your document workflow with AI-powered platform that make information discovery and management effortless."
+            paragraph="Transform your document workflow with AI-powered platform that make information discovery and management easy."
             center
           />
 

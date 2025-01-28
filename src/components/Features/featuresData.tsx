@@ -69,7 +69,7 @@ const featuresData: Feature[] = [
       </div>
     ),
     title: "Enterprise Security",
-    paragraph: "Protect your data with ISO 27001 certified security standards, ensuring complete encryption of all user information and document contents.",
+    paragraph: "Protect your data with ISO 27001 compatible security standards, ensuring complete encryption of all user information and document contents.",
   }
 ];
 export default featuresData;

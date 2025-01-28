@@ -12,7 +12,7 @@ const Contact = () => {
                 Contact Us
               </h2>
               <p className="mb-12 text-base font-medium text-body-color">
-                Ask a question or book a call with us. We will get back to ASAP.
+                Ask a question or book a call with us. We will get back to you ASAP.
               </p>
               <form>
                 <div className="-mx-4 flex flex-wrap">

@@ -31,7 +31,7 @@ const Footer = () => {
                 </p>
                 <div className="flex items-center">
                   <a
-                    href="https://twitter.com/doclink"
+                    href="https://x.com/doclinkio"
                     aria-label="social-link"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -53,7 +53,7 @@ const Footer = () => {
                     </svg>
                   </a>
                   <a
-                    href="https://linkedin.com/company/doclink"
+                    href="https://www.linkedin.com/company/doclink-io"
                     aria-label="social-link"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -69,7 +69,7 @@ const Footer = () => {
                     </svg>
                   </a>
                   <a
-                    href="https://github.com/doclink"
+                    href="https://github.com/rahmansahinler1/Doclink"
                     aria-label="social-link"
                     target="_blank"
                     rel="noopener noreferrer"

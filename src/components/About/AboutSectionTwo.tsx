@@ -39,7 +39,7 @@ const AboutSectionTwo = () => {
                   Smart Document Organization
                 </h3>
                 <p className="text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed">
-                  Manage all your documentation from one platform. Link your documentation to doclink and interact with just one platform.
+                  Manage all your documentation from one platform. Link your documentation to Doclink and interact with just one platform.
                 </p>
               </div>
               <div className="mb-1">
@@ -47,7 +47,7 @@ const AboutSectionTwo = () => {
                   Find Underlying Connections
                 </h3>
                 <p className="text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed">
-                  See how your documents connect and relate. Uncover valuable insights across your entire knowledge base..
+                  See how your documents connect and relate. Uncover valuable insights across your entire knowledge base.
                 </p>
               </div>
             </div>
