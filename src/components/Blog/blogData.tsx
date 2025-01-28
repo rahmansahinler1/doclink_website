@@ -38,7 +38,7 @@ const blogData: Blog[] = [
   {
     id: 3,
     title: "Tips to get most out of Doclink.io",
-    paragraph: "We optimize Doclink.io for your best experience. Learn step by step how to use it and best practices. You can extract table data, interact with Excel tables and many more.",
+    paragraph: "We optimize Doclink.io for your best experience. Learn step by step how to use it and best practices. You can connect your google drive, interact with Excel tables and many more.",
     previewImage: "/images/blog/blog-tips.png",
     fullImage: "/images/blog/blog-tips-full.jpg",
     author: {
