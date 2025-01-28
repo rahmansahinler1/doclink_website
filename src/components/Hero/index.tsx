@@ -51,7 +51,7 @@ const Hero = () => {
             <div className="w-full px-4">
               <div className="mx-auto max-w-[800px] text-center">
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Easy Documentation
+                  Intelligent AI Library
                 </h1>
                 <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
                   Manage all of your documentation using single platform. Link and chat with PDFs, docs, excel and more. Transform your files into AI powered intelligent library. Save up hours of manual search and reading.
