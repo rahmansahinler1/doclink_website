@@ -250,7 +250,7 @@ const FAQPage = () => {
                     How can I get help if I have issues?
                   </h3>
                   <p className="text-base text-body-color dark:text-body-color-dark">
-                    You can contact our support team through the Support section in your dashboard or by emailing support@doclink.ai. Premium users receive priority support response.
+                    You can contact our support team through the Support section.
                   </p>
                 </div>
 
