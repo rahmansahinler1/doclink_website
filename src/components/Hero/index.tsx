@@ -1,15 +1,24 @@
 "use client";
 
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useCallback, useEffect } from "react";
 
+// Add type definition for Google callback
+interface CredentialResponse {
+  credential: string;
+}
+
 const Hero = () => {
-  const handleCredentialResponse = useCallback((response: { credential: string }) => {
+  const { data: session } = useSession();
+
+  const handleCredentialResponse = useCallback((response: CredentialResponse) => {
     if (response.credential) {
       console.log('Google Sign-In Success:', response);
     }
   }, []);
 
   useEffect(() => {
+    // Load the Google Identity Services script
     const script = document.createElement('script');
     script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
@@ -17,22 +26,22 @@ const Hero = () => {
     document.head.appendChild(script);
 
     script.onload = () => {
-      if (window.google) {
+      if (window.google && !session) {
         window.google.accounts.id.initialize({
           client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
           callback: handleCredentialResponse
         });
 
         window.google.accounts.id.renderButton(
-          document.getElementById('google-signin'),
-          {
-            theme: 'outline',
-            size: 'large',
-            type: 'standard',
-            text: 'continue_with',
-            shape: 'rectangular',
+          document.getElementById("google-signin"),
+          { 
+            theme: "outline",
+            size: "large",
+            type: "standard",
+            text: "continue_with",
+            shape: "rectangular",
             width: 300,
-            locale: 'en',
+            locale: "en"
           }
         );
       }
@@ -41,7 +50,7 @@ const Hero = () => {
     return () => {
       document.head.removeChild(script);
     };
-  }, [handleCredentialResponse]);
+  }, [session, handleCredentialResponse]);
 
   return (
     <>
@@ -57,7 +66,19 @@ const Hero = () => {
                   Manage all of your documentation using single platform. Link and chat with PDFs, docs, excel and more. Transform your files into AI powered intelligent library. Save up hours of manual search and reading.
                 </p>
                 <div className="flex justify-center">
-                  <div id="google-signin" className="h-[40px] w-[300px]" />
+                  {session ? (
+                    <button
+                      onClick={() => signOut()}
+                      className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
+                    >
+                      Sign Out
+                    </button>
+                  ) : (
+                    <div 
+                      id="google-signin"
+                      className="h-[40px] w-[300px]"
+                    />
+                  )}
                 </div>
               </div>
             </div>
