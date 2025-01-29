@@ -39,7 +39,7 @@ export const authOptions: NextAuthOptions = {
               name: user.name,
               googleId: account.providerAccountId
             });
-
+          
             const result = await query(
               `INSERT INTO user_info 
                (user_id, google_id, user_name, user_surname, user_email, picture_url)
@@ -60,23 +60,6 @@ export const authOptions: NextAuthOptions = {
           } else {
             console.log('Existing user found:', rows[0]);
             userId = rows[0].user_id;
-            // Update existing user's last login and info
-            const updateResult = await query(
-              `UPDATE user_info 
-               SET user_name = $1,
-                   user_surname = $2,
-                   picture_url = $3,
-                   updated_at = CURRENT_TIMESTAMP
-               WHERE user_id = $4
-               RETURNING *`,
-              [
-                user.name?.split(' ')[0] || '',
-                user.name?.split(' ')[1] || '',
-                user.image,
-                userId
-              ]
-            );
-            console.log('User update result:', updateResult.rows[0]);
           }
 
           // Notify FastAPI about the user
@@ -130,11 +113,6 @@ export const authOptions: NextAuthOptions = {
       console.log('JWT callback completed:', { tokenSub: token.sub });
       return token;
     }
-  },
-  
-  pages: {
-    signIn: '/auth/signin',
-    error: '/auth/error',
   },
   
   debug: process.env.NODE_ENV === 'development',
