@@ -92,16 +92,13 @@ export const authOptions: NextAuthOptions = {
     },
     
     async session({ session, token }) {
-      session.user.id = token.id as string;
-      session.sessionId = token.sessionId as string;
+      session.sessionId = token.sessionId;
       return session;
     },
 
     async jwt({ token, account, user }) {
-      if (account?.provider === 'google') {
-        const sessionId = uuidv4();
-        token.id = user.id || token.sub;
-        token.sessionId = sessionId;
+      if (account?.provider === 'google' && !token.sessionId) {
+        token.sessionId = uuidv4();
       }
       return token;
     }

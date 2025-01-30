@@ -9,23 +9,49 @@ const Hero = () => {
 
   const handleGoogleSignIn = async () => {
     try {
+      console.log('Initiating Google sign in...');
       const result = await signIn('google', { 
         redirect: false,
-        callbackUrl: '/'
+        callbackUrl: '/error'
       });
   
-      if (result?.error) {
-        console.error('Sign in error:', result.error);
-        return;
+      if (!result) {
+        throw new Error('Sign in response was empty');
       }
   
-      // Get session and use sessionId for redirect
-      const session = await getSession();
-      if (session?.sessionId) {
-        router.push(`http://localhost:8000/chat/${session.sessionId}`);
+      if (result.error) {
+        throw new Error(`Authentication error: ${result.error}`);
       }
+  
+      // Step 3: Wait for session to be available
+      let session = null;
+      let retryCount = 0;
+      const maxRetries = 3;
+  
+      while (!session && retryCount < maxRetries) {
+        console.log(`Attempting to get session (attempt ${retryCount + 1})`);
+        session = await getSession();
+        
+        if (!session) {
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+          retryCount++;
+        }
+      }
+  
+      if (!session || !session.sessionId) {
+        throw new Error('Failed to obtain session ID after successful login');
+      }
+  
+      // Step 4: Redirect to chat
+      console.log('Redirecting to chat with session ID:', session.sessionId);
+      router.push(`http://localhost:8000/chat/${session.sessionId}`);
+  
     } catch (error) {
-      console.error('Sign in process error:', error);
+      console.error('Authentication error:', {
+        message: error.message,
+        stack: error.stack,
+        cause: error.cause
+      });
     }
   };
 
