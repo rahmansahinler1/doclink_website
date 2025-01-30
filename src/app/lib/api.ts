@@ -1,59 +1,44 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
-interface ApiOptions extends RequestInit {
-  timeout?: number;
-}
-
-export async function fetchWithAuth(endpoint: string, options: ApiOptions = {}) {
-  const { timeout = 8000, ...fetchOptions } = options;
-
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeout);
-
-    const response = await fetch(`${API_URL}${endpoint}`, {
-      ...fetchOptions,
-      credentials: 'include',
-      headers: {
-        ...fetchOptions.headers,
-        'Content-Type': 'application/json',
-      },
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.statusText}`);
-    }
-
-    return response.json();
-  } catch (error) {
-    if (error.name === 'AbortError') {
-      throw new Error('Request timeout');
-    }
-    throw error;
-  }
-}
-
 export async function initializeUserInApp(
   userId: string, 
   sessionToken: string, 
-  isNewUser: boolean = false
+  isFirstTime: boolean = false,
+  sessionId: string
 ) {
-  return fetchWithAuth('/api/initialize-user', {
-    method: 'POST',
-    body: JSON.stringify({
-      userId,
-      sessionToken,
-      isNewUser,
-      timestamp: new Date().toISOString()
-    }),
+  console.log('Triggering application rendering', {
+    userId,
+    sessionId,
+    isFirstTime,
+    tokenProvided: !!sessionToken
   });
-}
 
-export async function checkSession() {
-  return fetchWithAuth('/api/check-session', {
-    method: 'GET',
-  });
+  try {
+    // Send request but don't parse response as JSON
+    const response = await fetch(`${API_URL}/render-app`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        session_id: sessionId,
+        is_first_time: isFirstTime,
+        session_token: sessionToken,
+        timestamp: new Date().toISOString()
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // Just return the redirect URL, don't try to parse the response
+    return `http://localhost:8000/chat/${sessionId}`;
+    
+  } catch (error) {
+    console.error('Render request failed:', error);
+    throw error;
+  }
 }

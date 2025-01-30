@@ -2,6 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { query } from "@/app/lib/db";
 import { initializeUserInApp } from "@/app/lib/api";
+import { v4 as uuidv4 } from 'uuid';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -17,7 +18,7 @@ export const authOptions: NextAuthOptions = {
         provider: account?.provider,
         providerAccountId: account?.providerAccountId 
       });
-
+    
       if (account?.provider === "google") {
         try {
           // Check if user exists
@@ -26,12 +27,12 @@ export const authOptions: NextAuthOptions = {
             'SELECT * FROM user_info WHERE google_id = $1',
             [account.providerAccountId]
           );
-
+    
           console.log('Database query result:', { rowCount: rows.length });
-
+    
           let userId: string;
           let isNewUser = false;
-
+    
           if (rows.length === 0) {
             // Create new user
             console.log('Creating new user with data:', {
@@ -61,21 +62,26 @@ export const authOptions: NextAuthOptions = {
             console.log('Existing user found:', rows[0]);
             userId = rows[0].user_id;
           }
-
-          // Notify FastAPI about the user
+    
+          // Generate session ID
+          const sessionId = uuidv4();
+          
           try {
-            console.log('Notifying FastAPI about user:', { userId, isNewUser });
-            await initializeUserInApp(
+            console.log('Rendering application for user', { userId, isNewUser });
+            
+            const renderResponse = await initializeUserInApp(
               userId, 
               account.access_token || '',
-              isNewUser
+              isNewUser,
+              sessionId
             );
-            console.log('FastAPI notification successful');
+            console.log('FastAPI notification successful', renderResponse);
+
+            return true;
           } catch (error) {
             console.error('Failed to initialize user in FastAPI:', error);
+            return false;
           }
-
-          return true;
         } catch (error) {
           console.error('Database error during sign in:', error);
           console.error('Full error details:', error);
@@ -86,31 +92,17 @@ export const authOptions: NextAuthOptions = {
     },
     
     async session({ session, token }) {
-      console.log('Session callback started:', { tokenSub: token.sub });
-      try {
-        if (token.sub) {
-          const { rows } = await query(
-            'SELECT user_id, user_name, user_surname FROM user_info WHERE google_id = $1',
-            [token.sub]
-          );
-
-          if (rows.length > 0) {
-            session.user.id = rows[0].user_id;
-            session.user.name = `${rows[0].user_name} ${rows[0].user_surname}`.trim();
-            console.log('Session updated with user data:', session.user);
-          }
-        }
-      } catch (error) {
-        console.error('Error in session callback:', error);
-      }
+      session.user.id = token.id as string;
+      session.sessionId = token.sessionId as string;
       return session;
     },
 
-    async jwt({ token, account }) {
-      if (account?.access_token) {
-        token.accessToken = account.access_token;
+    async jwt({ token, account, user }) {
+      if (account?.provider === 'google') {
+        const sessionId = uuidv4();
+        token.id = user.id || token.sub;
+        token.sessionId = sessionId;
       }
-      console.log('JWT callback completed:', { tokenSub: token.sub });
       return token;
     }
   },

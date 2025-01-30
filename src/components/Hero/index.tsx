@@ -1,20 +1,31 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession, getSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 
 const Hero = () => {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   const handleGoogleSignIn = async () => {
     try {
-      console.log('Initiating Google sign in...');
-      const result = await signIn('google', {
-        callbackUrl: 'http://localhost:3000',
+      const result = await signIn('google', { 
         redirect: false,
+        callbackUrl: '/'
       });
-      console.log('Sign in result:', result);
+  
+      if (result?.error) {
+        console.error('Sign in error:', result.error);
+        return;
+      }
+  
+      // Get session and use sessionId for redirect
+      const session = await getSession();
+      if (session?.sessionId) {
+        router.push(`http://localhost:8000/chat/${session.sessionId}`);
+      }
     } catch (error) {
-      console.error('Sign in error:', error);
+      console.error('Sign in process error:', error);
     }
   };
 
