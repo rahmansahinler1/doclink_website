@@ -1,3 +1,4 @@
+// src/components/Hero/index.tsx
 "use client";
 
 import { signIn, useSession } from "next-auth/react";
@@ -8,9 +9,14 @@ const Hero = () => {
 
   useEffect(() => {
     if (session?.sessionId) {
-      // Redirect to FastAPI application with session ID
-      const appUrl = `${process.env.NEXT_PUBLIC_API_URL}/chat/${session.sessionId}`;
-      window.location.href = appUrl;
+      // Build URL with query parameters
+      const appUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/chat/${session.sessionId}`);
+      appUrl.searchParams.append('token', session.accessToken);
+      appUrl.searchParams.append('userId', session.user.id);
+      appUrl.searchParams.append('isNewUser', String(session.isNewUser));
+      
+      // Redirect
+      window.location.href = appUrl.toString();
     }
   }, [session]);
 

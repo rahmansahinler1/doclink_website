@@ -3,7 +3,6 @@ import NextAuth from "next-auth/next";
 import type { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { query } from "@/app/lib/db";
-import { initializeUserInApp } from "@/app/lib/api";
 import { v4 as uuidv4 } from 'uuid';
 
 export const authOptions: AuthOptions = {
@@ -31,7 +30,9 @@ export const authOptions: AuthOptions = {
         );
 
         let userId: string;
-        if (rows.length === 0) {
+        const isNewUser = rows.length === 0;
+
+        if (isNewUser) {
           // Create new user
           const result = await query(
             `INSERT INTO user_info 
@@ -51,7 +52,6 @@ export const authOptions: AuthOptions = {
           userId = rows[0].user_id;
         }
 
-        // Store in user object
         user.id = userId;
         return true;
       } catch (error) {
@@ -65,23 +65,12 @@ export const authOptions: AuthOptions = {
         try {
           const sessionId = uuidv4();
           token.sessionId = sessionId;
-
-          // Check if new user
-          const { rows } = await query(
-            'SELECT * FROM user_info WHERE user_id = $1',
-            [user.id]
-          );
-          const isNewUser = rows.length === 0;
-
-          // Signal FastAPI to render the application
-          await initializeUserInApp(
-            user.id,
-            account.access_token || '',
-            isNewUser,
-            sessionId
-          );
-
           token.userId = user.id;
+          token.isNewUser = !!(await query(
+            'SELECT * FROM user_info WHERE user_id = $1 AND user_created_at > NOW() - INTERVAL \'5 minutes\'',
+            [user.id]
+          )).rows.length;
+          token.accessToken = account.access_token;
         } catch (error) {
           console.error('Error in jwt callback:', error);
           throw error;
@@ -94,6 +83,8 @@ export const authOptions: AuthOptions = {
       if (token) {
         session.user.id = token.userId as string;
         session.sessionId = token.sessionId;
+        session.accessToken = token.accessToken;
+        session.isNewUser = token.isNewUser;
       }
       return session;
     }

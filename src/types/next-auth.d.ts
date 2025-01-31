@@ -11,6 +11,8 @@ declare module "next-auth" {
       image?: string | null;
     } & DefaultSession["user"];
     sessionId: string;
+    accessToken: string;
+    isNewUser: boolean;
   }
 
   interface User extends DefaultUser {
@@ -22,5 +24,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     userId?: string;
     sessionId: string;
+    accessToken?: string;
+    isNewUser?: boolean;
   }
 }
