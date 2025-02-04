@@ -3,6 +3,7 @@
 
 import { signIn, useSession } from "next-auth/react";
 import { useEffect } from 'react';
+import { handleGoogleSignIn } from "@/utils/auth";
 
 const Hero = () => {
   const { data: session } = useSession();
@@ -19,12 +20,6 @@ const Hero = () => {
       window.location.href = appUrl.toString();
     }
   }, [session]);
-
-  const handleGoogleSignIn = () => {
-    signIn('google', {
-      redirect: false
-    });
-  };
 
   return (
     <>
