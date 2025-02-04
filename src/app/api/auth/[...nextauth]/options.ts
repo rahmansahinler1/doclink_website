@@ -85,12 +85,26 @@ export const authOptions: AuthOptions = {
         session.isNewUser = token.isNewUser;
       }
       return session;
-    }
+    },
+
+    async redirect({ url, baseUrl }) {
+      // Handle signout redirect
+      if (url.startsWith(baseUrl)) {
+          return url;
+      }
+      // Default to home page
+      return baseUrl;
+    },
+
   },
   
   events: {
     async signIn(message) {
       console.log(`User signed in: ${message.user.email}`);
-    }
+    },
+
+    async signOut(message) {
+      console.log(`User signed out: ${message.token.email}`);
+  }
   }
 };
