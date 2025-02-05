@@ -12,6 +12,7 @@ export async function GET(request: Request) {
         const session = await getServerSession(authOptions);
         
         if (session) {
+            console.log('Session found');
             const response = NextResponse.redirect(baseUrl);
             
             // Cookie clearing configuration
