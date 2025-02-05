@@ -1,7 +1,10 @@
 // src/app/api/auth/signout/route.ts
-import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "../[...nextauth]/options";
+
+// Mark this route as dynamic
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
     console.log("Starting signout process");
@@ -9,14 +12,11 @@ export async function GET(request: Request) {
     const isProduction = process.env.NODE_ENV === 'production';
     
     try {
-        // Get the current session
         const session = await getServerSession(authOptions);
         console.log("Current session:", !!session);
 
-        // Create the response with redirect
         const response = NextResponse.redirect(baseUrl);
         
-        // Clear session cookies
         const cookieOptions = {
             expires: new Date(0),
             path: '/',
@@ -25,7 +25,6 @@ export async function GET(request: Request) {
             sameSite: 'lax' as const
         };
 
-        // Clear cookies with various domain combinations
         const domains = isProduction ? 
             [undefined, 'doclink.io', '.doclink.io', 'www.doclink.io'] : 
             [undefined];
@@ -43,7 +42,6 @@ export async function GET(request: Request) {
             '_ga'
         ];
 
-        // Clear each cookie with each domain combination
         domains.forEach(domain => {
             cookieNames.forEach(name => {
                 console.log(`Clearing cookie: ${name} for domain: ${domain || 'default'}`);
@@ -54,12 +52,11 @@ export async function GET(request: Request) {
             });
         });
 
-        // Add cache control headers
+        // No caching headers
         response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
         response.headers.set('Pragma', 'no-cache');
         response.headers.set('Expires', '0');
 
-        console.log("Signout process completed");
         return response;
     } catch (error) {
         console.error('Signout error:', error);
