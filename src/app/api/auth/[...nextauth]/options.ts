@@ -60,19 +60,21 @@ export const authOptions: AuthOptions = {
 
     async jwt({ token, user, account }) {
       if (account && user) {
-        try {
-          const sessionId = uuidv4();
-          token.sessionId = sessionId;
-          token.userId = user.id;
-          token.isNewUser = !!(await query(
-            'SELECT * FROM user_info WHERE user_id = $1 AND user_created_at > NOW() - INTERVAL \'5 minutes\'',
-            [user.id]
-          )).rows.length;
-          token.accessToken = account.access_token;
-        } catch (error) {
-          console.error('Error in jwt callback:', error);
-          throw error;
-        }
+          try {
+              // Only generate new sessionId if one doesn't exist
+              if (!token.sessionId) {
+                  token.sessionId = uuidv4();
+              }
+              token.userId = user.id;
+              token.isNewUser = !!(await query(
+                  'SELECT * FROM user_info WHERE user_id = $1 AND user_created_at > NOW() - INTERVAL \'5 minutes\'',
+                  [user.id]
+              )).rows.length;
+              token.accessToken = account.access_token;
+          } catch (error) {
+              console.error('Error in jwt callback:', error);
+              throw error;
+          }
       }
       return token;
     },
