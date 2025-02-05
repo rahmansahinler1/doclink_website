@@ -37,7 +37,10 @@ export async function GET(request: Request) {
             'next-auth.csrf-token',
             '__Secure-next-auth.callback-url',
             '__Host-next-auth.csrf-token',
-            'session_id'
+            'sessionId',
+            'session_token',
+            '_ga_HYM6103YPL',
+            '_ga'
         ];
 
         // Clear each cookie with each domain combination
