@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../[...nextauth]/options';
 
 export async function GET(request: Request) {
+    console.log('Signout route hit');
     const baseUrl = process.env.NEXTAUTH_URL;
     const isProduction = process.env.NODE_ENV === 'production';
     
