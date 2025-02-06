@@ -9,16 +9,37 @@ const Hero = () => {
   const { data: session } = useSession();
 
   useEffect(() => {
-    if (session?.sessionId) {
-      // Build URL with query parameters
-      const appUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/chat/${session.sessionId}`);
-      appUrl.searchParams.append('token', session.accessToken);
-      appUrl.searchParams.append('userId', session.user.id);
-      appUrl.searchParams.append('isNewUser', String(session.isNewUser));
-      
-      // Redirect
-      window.location.href = appUrl.toString();
-    }
+    const validateAndRedirect = async () => {
+      if (session?.sessionId && session?.user?.id) {
+        try {
+          const response = await fetch('/api/auth/session/validate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              sessionId: session.sessionId,
+              userId: session.user.id
+            })
+          });
+    
+          const { valid } = await response.json();
+    
+          if (valid) {
+            const appUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/chat/${session.sessionId}`);
+            appUrl.searchParams.append('token', session.accessToken);
+            appUrl.searchParams.append('userId', session.user.id);
+            appUrl.searchParams.append('isNewUser', String(session.isNewUser));
+            
+            window.location.href = appUrl.toString();
+          }
+        } catch (error) {
+          console.error('Session validation error:', error);
+        }
+      }
+    };
+
+    validateAndRedirect();
   }, [session]);
 
   return (

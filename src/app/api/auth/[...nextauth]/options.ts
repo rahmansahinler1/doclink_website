@@ -2,6 +2,16 @@ import type { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { query } from "@/app/lib/db";
 import { v4 as uuidv4 } from 'uuid';
+import Redis from 'ioredis';
+
+// Initialize Redis client
+const redis = new Redis({
+  host: "localhost",
+  port: 6380,
+  db: 0
+});
+
+const SESSION_TTL = 259200; // 3 days in seconds
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -31,7 +41,6 @@ export const authOptions: AuthOptions = {
         const isNewUser = rows.length === 0;
 
         if (isNewUser) {
-          // Create new user
           const result = await query(
             `INSERT INTO user_info 
              (user_id, google_id, user_name, user_surname, user_email, picture_url)
@@ -50,6 +59,7 @@ export const authOptions: AuthOptions = {
           userId = rows[0].user_id;
         }
 
+        // Attach userId to user object
         user.id = userId;
         return true;
       } catch (error) {
@@ -60,21 +70,33 @@ export const authOptions: AuthOptions = {
 
     async jwt({ token, user, account }) {
       if (account && user) {
-          try {
-              // Only generate new sessionId if one doesn't exist
-              if (!token.sessionId) {
-                  token.sessionId = uuidv4();
-              }
-              token.userId = user.id;
-              token.isNewUser = !!(await query(
-                  'SELECT * FROM user_info WHERE user_id = $1 AND user_created_at > NOW() - INTERVAL \'5 minutes\'',
-                  [user.id]
-              )).rows.length;
-              token.accessToken = account.access_token;
-          } catch (error) {
-              console.error('Error in jwt callback:', error);
-              throw error;
+        try {
+          // Generate sessionId only on initial token creation
+          if (!token.sessionId) {
+            const sessionId = uuidv4();
+            // Store session in Redis
+            await redis.set(
+              `user:${user.id}:session:${sessionId}`,
+              'true',
+              'EX',
+              SESSION_TTL
+            );
+            token.sessionId = sessionId;
           }
+          
+          token.userId = user.id;
+          token.accessToken = account.access_token;
+          
+          // Check if new user
+          const { rows } = await query(
+            'SELECT * FROM user_info WHERE user_id = $1 AND user_created_at > NOW() - INTERVAL \'5 minutes\'',
+            [user.id]
+          );
+          token.isNewUser = rows.length > 0;
+        } catch (error) {
+          console.error('Error in jwt callback:', error);
+          throw error;
+        }
       }
       return token;
     },
