@@ -13,6 +13,7 @@
     "@types/next-auth": "^3.13.0",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
+    "ioredis": "^4.28.5",
     "lucide-react": "^0.473.0",
     "next": "^14.1.0",
     "next-auth": "^4.24.11",
@@ -23,6 +24,7 @@
     "react-modal-video": "^2.0.1"
   },
   "devDependencies": {
+    "@types/ioredis": "^4.28.10",
     "@types/node": "^20.8.9",
     "@types/pg": "^8.11.11",
     "@types/react": "^18.2.33",
