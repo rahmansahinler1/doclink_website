@@ -43,14 +43,15 @@ export const authOptions: AuthOptions = {
         if (isNewUser) {
           const result = await query(
             `INSERT INTO user_info 
-             (user_id, google_id, user_name, user_surname, user_email, picture_url)
-             VALUES (gen_random_uuid(), $1, $2, $3, $4, $5)
+             (user_id, google_id, user_name, user_surname, user_email, user_type, picture_url)
+             VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6)
              RETURNING user_id`,
             [
               account.providerAccountId,
               user.name?.split(' ')[0] || '',
               user.name?.split(' ')[1] || '',
               user.email,
+              'free',
               user.image
             ]
           );
