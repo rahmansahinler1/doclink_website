@@ -223,7 +223,7 @@ const FAQPage = () => {
                     What's included in the free tier?
                   </h3>
                   <p className="text-base text-body-color dark:text-body-color-dark">
-                    The free tier includes 20 sources, 3 knowledge bases, and a daily limit of 50 questions. This allows you to thoroughly test our platform's capabilities.
+                    The free tier includes 10 sources, 3 folders, and a daily limit of 10 questions. This allows you to thoroughly test our platform's capabilities.
                   </p>
                 </div>
 

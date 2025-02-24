@@ -1,4 +1,5 @@
-"use client";
+'use client';
+
 import { useState } from "react";
 import SectionTitle from "../Common/SectionTitle";
 import OfferList from "./OfferList";
@@ -11,8 +12,8 @@ const Pricing = () => {
     <section id="pricing" className="relative z-10 py-16 md:py-20 lg:py-28">
       <div className="container">
         <SectionTitle
-          title="Pricing"
-          paragraph="Start for free to change your interaction with information. Interact all of your documentation from single platform."
+          title="Simple, Transparent Pricing"
+          paragraph="Start for free and upgrade when you need more. No hidden fees, no surprises."
           center
           width="665px"
         />
@@ -57,59 +58,51 @@ const Pricing = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-x-4 gap-y-10 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-6 2xl:gap-x-8">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+          {/* Free Plan */}
           <PricingBox
             packageName="Free"
-            price={isMonthly ? "0" : "0"}
-            duration={isMonthly ? "mo" : "mo"}
-            subtitle="Start experiencing Doclink.io right now."
+            price="0"
+            duration={isMonthly ? "mo" : "yr"}
+            subtitle="Perfect for getting started"
+            buttonText="Try For Free"
           >
-            <OfferList text="20 Sources" status="active" />
-            <OfferList text="3 Knowledge Base" status="active" />
-            <OfferList text="50 Daily QA Limit" status="active" />
+            <OfferList text="10 Sources" status="active" />
+            <OfferList text="3 Folders" status="active" />
+            <OfferList text="10 Daily Question" status="active" />
+            <OfferList text="Limited Reporting" status="active" />
+            <OfferList text="No Credit Card Required" status="active" />
           </PricingBox>
+
+          {/* Premium Plan */}
           <PricingBox
             packageName="Premium"
-            price={isMonthly ? "7.99" : "4.99"}
-            duration={isMonthly ? "mo" : "mo"}
+            price={isMonthly ? "8" : "80"}
+            duration={isMonthly ? "mo" : "yr"}
             subtitle="Increase your limits. Use anytime."
+            buttonText="Try For Free"
           >
             <OfferList text="100 Sources" status="active" />
-            <OfferList text="10 Knowledge Base" status="active" />
-            <OfferList text="Limitless QA" status="active" />
-            <OfferList text="Source & Knowledge Base Summarization" status="active" />
-            <OfferList text="Personilzed Chat Storage" status="active" />
-            <OfferList text="Priority Support" status="active" />
+            <OfferList text="10 Folders" status="active" />
+            <OfferList text="Unlimited Questions" status="active" />
+            <OfferList text="Unlimited Reporting" status="active" />
+            <OfferList text="Support Calls" status="active" />
           </PricingBox>
-          <PricingBox
-            packageName="Pro"
-            price={isMonthly ? "14.99" : "9.99"}
-            duration={isMonthly ? "mo" : "mo"}
-            subtitle="Go deeper analysis. Use additional features."
-          >
-            <OfferList text="200 Sources" status="active" />
-            <OfferList text="20 Knowledge Base" status="active" />
-            <OfferList text="Limitless QA" status="active" />
-            <OfferList text="Source & Knowledge Base Summarization" status="active" />
-            <OfferList text="Personilzed Chat Storage" status="active" />
-            <OfferList text="Prio Support Calls" status="active" />
-            <OfferList text="Automatic Reporting" status="active" />
-            <OfferList text="Information Comparison" status="active" />
-            <OfferList text="Source Sharing" status="active" />
-          </PricingBox>
+
+          {/* Enterprise Plan */}
           <PricingBox
             packageName="Enterprise"
             price="Custom"
             duration=""
-            subtitle="Customize the experience. Use with your team."
-            buttonText="Book a Meeting"
+            subtitle="For organizations with specific needs"
+            buttonText="Book a Call"
           >
-            <OfferList text="Everything in Pro Plan Per User" status="active" />
-            <OfferList text="100 Person Limit" status="active" />
-            <OfferList text="On-Prem Integration" status="active" />
-            <OfferList text="24/7 Prio Customer Support" status="active" />
-            <OfferList text="Customizable Experience" status="active" />
-            <OfferList text="Share Within Your Organization" status="active" />
+            <OfferList text="Everything in Premium" status="active" />
+            <OfferList text="Dedicated Support" status="active" />
+            <OfferList text="Custom Development" status="active" />
+            <OfferList text="SLA Guarantees" status="active" />
+            <OfferList text="Training & Onboarding" status="active" />
+            <OfferList text="Security Reviews" status="active" />
           </PricingBox>
         </div>
       </div>
