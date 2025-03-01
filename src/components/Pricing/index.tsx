@@ -1,108 +1,58 @@
-'use client';
-
-import { useState } from "react";
+"use client";
 import SectionTitle from "../Common/SectionTitle";
 import OfferList from "./OfferList";
 import PricingBox from "./PricingBox";
 
 const Pricing = () => {
-  const [isMonthly, setIsMonthly] = useState(true);
-
   return (
     <section id="pricing" className="relative z-10 py-16 md:py-20 lg:py-28">
       <div className="container">
         <SectionTitle
-          title="Simple, Transparent Pricing"
-          paragraph="Start for free and upgrade when you need more. No hidden fees, no surprises."
+          title="Pricing"
+          paragraph="Start for free to change your interaction with information. Interact with all of your documentation from a single platform."
           center
           width="665px"
         />
 
-        <div className="w-full">
-          <div className="mb-8 flex justify-center md:mb-12 lg:mb-16">
-            <span
-              onClick={() => setIsMonthly(true)}
-              className={`${
-                isMonthly
-                  ? "pointer-events-none text-primary"
-                  : "text-dark dark:text-white"
-              } mr-4 cursor-pointer text-base font-semibold`}
-            >
-              Monthly
-            </span>
-            <div
-              onClick={() => setIsMonthly(!isMonthly)}
-              className="flex cursor-pointer items-center"
-            >
-              <div className="relative">
-                <div className="h-5 w-14 rounded-full bg-[#1D2144] shadow-inner"></div>
-                <div
-                  className={`${
-                    isMonthly ? "" : "translate-x-full"
-                  } shadow-switch-1 absolute left-0 top-[-4px] flex h-7 w-7 items-center justify-center rounded-full bg-primary transition`}
-                >
-                  <span className="active h-4 w-4 rounded-full bg-white"></span>
-                </div>
-              </div>
-            </div>
-            <span
-              onClick={() => setIsMonthly(false)}
-              className={`${
-                isMonthly
-                  ? "text-dark dark:text-white"
-                  : "pointer-events-none text-primary"
-              } ml-4 cursor-pointer text-base font-semibold`}
-            >
-              Yearly
-            </span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
-          {/* Free Plan */}
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-3 lg:grid-cols-3">
           <PricingBox
             packageName="Free"
             price="0"
-            duration={isMonthly ? "mo" : "yr"}
-            subtitle="Perfect for getting started"
-            buttonText="Try For Free"
+            duration="No Credit Card"
+            subtitle="Start experiencing Doclink.io right now."
           >
             <OfferList text="10 Sources" status="active" />
             <OfferList text="3 Folders" status="active" />
-            <OfferList text="10 Daily Question" status="active" />
-            <OfferList text="Limited Reporting" status="active" />
-            <OfferList text="No Credit Card Required" status="active" />
+            <OfferList text="10 Daily question limit" status="active" />
           </PricingBox>
-
-          {/* Premium Plan */}
+          
           <PricingBox
             packageName="Premium"
-            price={isMonthly ? "8" : "80"}
-            duration={isMonthly ? "mo" : "yr"}
-            subtitle="Increase your limits. Use anytime."
+            price="20"
+            duration="Lifetime"
+            subtitle="Unlock full power with a one-time payment."
             buttonText="Try For Free"
           >
-            <OfferList text="100 Sources" status="active" />
-            <OfferList text="10 Folders" status="active" />
-            <OfferList text="Unlimited Questions" status="active" />
-            <OfferList text="Unlimited Reporting" status="active" />
-            <OfferList text="Support Calls" status="active" />
+            <OfferList text="200 Sources" status="active" />
+            <OfferList text="20 Folders" status="active" />
+            <OfferList text="Limitless Questions" status="active" />
+            <OfferList text="Priority Support" status="active" />
+            <OfferList text="Early Access to New Features" status="active" />
           </PricingBox>
-
-          {/* Enterprise Plan */}
+          
           <PricingBox
             packageName="Enterprise"
             price="Custom"
             duration=""
-            subtitle="For organizations with specific needs"
-            buttonText="Book a Call"
+            subtitle="Customize the experience. Use with your team."
+            buttonText="Book a Meeting"
           >
-            <OfferList text="Everything in Premium" status="active" />
-            <OfferList text="Dedicated Support" status="active" />
-            <OfferList text="Custom Development" status="active" />
-            <OfferList text="SLA Guarantees" status="active" />
-            <OfferList text="Training & Onboarding" status="active" />
-            <OfferList text="Security Reviews" status="active" />
+            <OfferList text="Everything in Premium Plan Per User" status="active" />
+            <OfferList text="100 Person Limit" status="active" />
+            <OfferList text="On-Prem Integration" status="active" />
+            <OfferList text="24/7 Priority Customer Support" status="active" />
+            <OfferList text="Customizable Experience" status="active" />
+            <OfferList text="Share Within Your Organization" status="active" />
           </PricingBox>
         </div>
       </div>
