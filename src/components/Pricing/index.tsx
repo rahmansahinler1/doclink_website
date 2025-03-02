@@ -33,8 +33,8 @@ const Pricing = () => {
             subtitle="Unlock full power with a one-time payment."
             buttonText="Try For Free"
           >
-            <OfferList text="200 Sources" status="active" />
-            <OfferList text="20 Folders" status="active" />
+            <OfferList text="100 Sources" status="active" />
+            <OfferList text="10 Folders" status="active" />
             <OfferList text="Limitless Questions" status="active" />
             <OfferList text="Priority Support" status="active" />
             <OfferList text="Early Access to New Features" status="active" />
