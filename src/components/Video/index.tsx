@@ -7,7 +7,7 @@ const ProductShowcase = () => {
       <div className="container">
         <SectionTitle
           title="Information. Fast."
-          paragraph="Stop wasting time searching through documents manually. Create your own intelligent knowledge base, connect your documents, and just chat to get accurate answers."
+          paragraph="Don't lack behind! Analyze multiple documents simultaneously. Save hours, do 2 times more work at the sime time!"
           center
           mb="80px"
         />

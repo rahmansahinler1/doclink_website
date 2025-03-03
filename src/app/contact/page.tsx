@@ -13,7 +13,7 @@ const ContactPage = () => {
     <>
       <Breadcrumb
         pageName="Contact Page"
-        description="If you need help, we're here for you. Book a call with reaching us."
+        description="If you need help or want to contact, please don't hesitate!"
       />
 
       <Contact />

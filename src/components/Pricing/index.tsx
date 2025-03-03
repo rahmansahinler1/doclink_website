@@ -9,7 +9,7 @@ const Pricing = () => {
       <div className="container">
         <SectionTitle
           title="Pricing"
-          paragraph="Start for free to change your interaction with information. Interact with all of your documentation from a single platform."
+          paragraph="No complicated pricing. No forgotten subscriptions. You can also use Doclink for free. If you want full experience pay once and use it for lifetime!"
           center
           width="665px"
         />
