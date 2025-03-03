@@ -18,8 +18,8 @@ const featuresData: Feature[] = [
         <MessagesSquare size={40} strokeWidth={1.5} />
       </div>
     ),
-    title: "Smart Document Chat",
-    paragraph: "Interact naturally with your documents through AI-powered chat. Ask questions, get summaries, and extract information instantly.",
+    title: "Ask to Documents",
+    paragraph: "Get answers directly from your documents. No more searching through pages of content manually. Just chat to get information.",
   },
   {
     id: 2,
@@ -28,8 +28,8 @@ const featuresData: Feature[] = [
         <Network size={40} strokeWidth={1.5} />
       </div>
     ),
-    title: "Knowledge Connection",
-    paragraph: "Link related documents automatically, discovering connections across your entire document library through semantic understanding.",
+    title: "Find Connections",
+    paragraph: "Ask PDF, Word, Text files, even Excel tables at the same time. Discover hidden relations just in seconds. Prevent manual searching.",
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const featuresData: Feature[] = [
       </div>
     ),
     title: "Multi-Format Support",
-    paragraph: "Process and analyze PDFs, Word documents, Excel sheets, and more in a unified platform. Extract insights across different file types seamlessly.",
+    paragraph: "Upload and ask PDFs, Excel files, Word documents, even the web URL's. All your important files in one platform.",
   },
   {
     id: 4,
@@ -48,8 +48,8 @@ const featuresData: Feature[] = [
         <Share2 size={40} strokeWidth={1.5} />
       </div>
     ),
-    title: "Platform Integration",
-    paragraph: "Connect seamlessly with popular platforms like Google Drive, ensuring your documents are accessible and synchronized across your preferred storage solutions.",
+    title: "Break the Language Bareer",
+    paragraph: "No language bareer with AI. Ask question with your natural language and get answers in same language from different language file.",
   },
   {
     id: 5,
@@ -91,26 +91,5 @@ const SingleFeature = ({ feature }: { feature: Feature }) => {
         </p>
       </div>
     </div>
-  );
-};
-
-// index.tsx (Features component)
-const Features = () => {
-  return (
-    <section id="features" className="py-16 md:py-20 lg:py-28">
-      <div className="container">
-        <SectionTitle
-          title="Transform Your Documents into Knowledge"
-          paragraph="Leverage AI to unlock insights from your documents. Ask questions, find connections, and get accurate answers with source validation - all in one secure platform."
-          center
-        />
-
-        <div className="grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
-          {featuresData.map((feature) => (
-            <SingleFeature key={feature.id} feature={feature} />
-          ))}
-        </div>
-      </div>
-    </section>
   );
 };
