@@ -47,7 +47,7 @@ const AboutSectionTwo = () => {
                   Find Underlying Connections
                 </h3>
                 <p className="text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed">
-                  See how your documents connect and relate. Uncover valuable insights across your entire knowledge base.
+                  See how your documents connect and relate. Uncover valuable insights across your entire documentation.
                 </p>
               </div>
             </div>

@@ -14,7 +14,7 @@ const AboutPage = () => {
     <>
       <Breadcrumb
         pageName="About Page"
-        description="If you need help, we're here for you. Book a call with reaching us."
+        description="If you need help or want to contact, please don't hesitate!"
       />
       <AboutSectionOne />
       <AboutSectionTwo />

@@ -24,7 +24,7 @@ const AboutSectionOne = () => {
           <div className="-mx-4 flex flex-wrap items-center">
             <div className="w-full px-4 lg:w-1/2">
               <SectionTitle
-                title="Crafted for Information Critical Businesses & Researches"
+                title="Crafted for Information Critical Businesses"
                 paragraph="Trust is our core value. We prioritize accuracy by delivering answers strictly from your own information sources—no false generations, no AI hallucinations. If the answer isn’t in your data, you’ll know it, ensuring complete transparency and reliability."
                 mb="44px"
               />
@@ -35,15 +35,15 @@ const AboutSectionOne = () => {
               >
                 <div className="mx-[-12px] flex flex-wrap">
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-                    <List text="95% Accurate Answers" />
+                    <List text="95% Accuracy" />
                     <List text="0% Hallucination" />
                     <List text="Large Capacity" />
                   </div>
 
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-                    <List text="Reusable Knowledge" />
                     <List text="User Friendly UI" />
                     <List text="Secured Storage" />
+                    <List text="Chat Reporting" />
                   </div>
                 </div>
               </div>
