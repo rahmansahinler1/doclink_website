@@ -37,8 +37,8 @@ const blogData: Blog[] = [
   },
   {
     id: 3,
-    title: "Tips to get most out of Doclink.io",
-    paragraph: "We optimize Doclink.io for your best experience. Learn step by step how to use it and best practices. You can connect your google drive, interact with Excel tables and many more.",
+    title: "How to use better? Tips to get most out of Doclink",
+    paragraph: "We optimize Doclink for your best experience. Doclink only generate answers from your files. Reaching information might take another shot. Learn how to use it best.",
     previewImage: "/images/blog/blog-tips.png",
     fullImage: "/images/blog/blog-tips-full.jpg",
     author: {

@@ -11,7 +11,7 @@ const Blog = () => {
       <div className="container">
         <SectionTitle
           title="Our Latest Blogs"
-          paragraph="Dive deeply, learn more about Doclink.io and technology we use. We value the complete transparency and opensource."
+          paragraph="Dive deeply, learn more about Doclink and technology we use. We value the complete transparency and opensource."
           center
         />
 

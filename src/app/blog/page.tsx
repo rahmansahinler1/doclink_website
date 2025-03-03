@@ -7,7 +7,7 @@ const BlogPage = () => {
     <>
       <Breadcrumb
         pageName="Blog Posts"
-        description="Stay updated with our latest news and updates about AI and document intelligence."
+        description="Stay updated with our latest news and updates about AI and document intelligence. We especially love to talk about RAG, the special technique we integrated. If you have any ideas, don't hesitate to reach us!"
       />
 
       <section className="pt-[120px] pb-[120px]">
