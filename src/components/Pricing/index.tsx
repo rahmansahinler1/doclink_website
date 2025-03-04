@@ -23,7 +23,7 @@ const Pricing = () => {
           >
             <OfferList text="10 Sources" status="active" />
             <OfferList text="3 Folders" status="active" />
-            <OfferList text="10 Daily question limit" status="active" />
+            <OfferList text="25 Daily question limit" status="active" />
           </PricingBox>
           
           <PricingBox
