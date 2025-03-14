@@ -4,9 +4,11 @@
 import { useSession } from "next-auth/react";
 import { useEffect } from 'react';
 import { handleGoogleSignIn } from "@/utils/auth";
+import { useRouter } from 'next/navigation';
 
 const Hero = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     const validateAndRedirect = async () => {
@@ -26,12 +28,8 @@ const Hero = () => {
           const { valid } = await response.json();
     
           if (valid) {
-            const appUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/chat/${session.sessionId}`);
-            appUrl.searchParams.append('token', session.accessToken);
-            appUrl.searchParams.append('userId', session.user.id);
-            appUrl.searchParams.append('isNewUser', String(session.isNewUser));
-            
-            window.location.href = appUrl.toString();
+            // Redirect to our internal dashboard instead of external app
+            router.push('/dashboard');
           }
         } catch (error) {
           console.error('Session validation error:', error);
@@ -40,7 +38,7 @@ const Hero = () => {
     };
 
     validateAndRedirect();
-  }, [session]);
+  }, [session, router]);
 
   return (
     <>
