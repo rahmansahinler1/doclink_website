@@ -12,11 +12,11 @@ export default async function DashboardLayout({
   const session = await getServerSession();
 
   if (!session || !session.user) {
-    redirect('/auth');
+    redirect('/site/auth');
   }
 
   return (
-    <div className="flex h-screen bg-gray-900 text-white">
+    <div className="flex h-screen overflow-hidden bg-gray-900 text-white">
       <DashboardSidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <DashboardHeader />
