@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { 
   FolderIcon, 
   ChatBubbleLeftRightIcon, 
@@ -14,16 +12,25 @@ import {
 } from '@heroicons/react/24/outline';
 
 const navItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: <DocumentTextIcon className="w-5 h-5" /> },
-  { name: 'Folders', href: '/dashboard/folders', icon: <FolderIcon className="w-5 h-5" /> },
-  { name: 'Chat', href: '/dashboard/chat', icon: <ChatBubbleLeftRightIcon className="w-5 h-5" /> },
-  { name: 'Documents', href: '/dashboard/documents', icon: <DocumentTextIcon className="w-5 h-5" /> },
-  { name: 'Settings', href: '/dashboard/settings', icon: <Cog6ToothIcon className="w-5 h-5" /> },
+  { name: 'Dashboard', id: 'dashboard', icon: <DocumentTextIcon className="w-5 h-5" /> },
+  { name: 'Folders', id: 'folders', icon: <FolderIcon className="w-5 h-5" /> },
+  { name: 'Chat', id: 'chat', icon: <ChatBubbleLeftRightIcon className="w-5 h-5" /> },
+  { name: 'Documents', id: 'documents', icon: <DocumentTextIcon className="w-5 h-5" /> },
+  { name: 'Settings', id: 'settings', icon: <Cog6ToothIcon className="w-5 h-5" /> },
 ];
 
 export default function DashboardSidebar() {
-  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState('dashboard');
   const [collapsed, setCollapsed] = useState(false);
+
+  const handleNavigation = (sectionId: string) => {
+    setActiveSection(sectionId);
+    
+    // Use the handler from the dashboard page
+    if (typeof window !== 'undefined' && (window as any).handleSectionChange) {
+      (window as any).handleSectionChange(sectionId);
+    }
+  };
 
   return (
     <aside 
@@ -59,17 +66,17 @@ export default function DashboardSidebar() {
           <ul className="space-y-1 p-2">
             {navItems.map((item) => (
               <li key={item.name}>
-                <Link
-                  href={item.href}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
-                    pathname === item.href
+                <button
+                  onClick={() => handleNavigation(item.id)}
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                    activeSection === item.id
                       ? 'bg-gray-700 text-white'
                       : 'text-gray-400 hover:bg-gray-700 hover:text-white'
                   }`}
                 >
                   <span className="flex-shrink-0">{item.icon}</span>
                   {!collapsed && <span>{item.name}</span>}
-                </Link>
+                </button>
               </li>
             ))}
           </ul>
