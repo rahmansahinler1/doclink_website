@@ -1,28 +1,46 @@
 // src/middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const token = await getToken({ req: request });
   
-  // Allow all API routes, dashboard routes, and site routes to pass through
+  // Public paths that anyone can access
+  const publicPaths = [
+    '/', 
+    '/about', 
+    '/blog', 
+    '/contact', 
+    '/faq', 
+    '/pricing', 
+    '/privacy', 
+    '/terms', 
+    '/terms-of-use'
+  ];
+  const isPublicPath = publicPaths.some(path => 
+    pathname === path || pathname.startsWith(`${path}/`)
+  );
+  
+  // Always allow API routes, auth routes, static assets and public paths
   if (
     pathname.startsWith('/api') || 
-    pathname.startsWith('/dashboard') || 
-    pathname.startsWith('/site')
+    pathname.startsWith('/auth') ||
+    pathname.match(/\.(jpg|jpeg|png|gif|svg|ico|css|js)$/) ||
+    isPublicPath
   ) {
     return NextResponse.next();
   }
   
-  // Redirect root to /site
-  if (pathname === '/') {
-    return NextResponse.redirect(new URL('/site', request.url));
-  }
-  
-  // Redirect /auth to /site/auth
-  if (pathname.startsWith('/auth')) {
-    const newPath = pathname.replace('/auth', '/site/auth');
-    return NextResponse.redirect(new URL(newPath, request.url));
+  // Protected routes require authentication
+  if (pathname.startsWith('/dashboard')) {
+    // If user is not logged in, redirect to login page
+    if (!token) {
+      return NextResponse.redirect(new URL('/auth/login', request.url));
+    }
+    // Otherwise, allow access to dashboard
+    return NextResponse.next();
   }
   
   // Default to allowing the request
