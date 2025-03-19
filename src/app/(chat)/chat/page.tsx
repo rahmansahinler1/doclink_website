@@ -82,7 +82,7 @@ const SettingsSection = () => (
   </div>
 );
 
-export default function DashboardPage() {
+export default function ChatPage() {
   const [activeSection, setActiveSection] = useState('dashboard');
 
   // Function to be passed to Sidebar to update active section

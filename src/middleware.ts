@@ -34,12 +34,12 @@ export async function middleware(request: NextRequest) {
   }
   
   // Protected routes require authentication
-  if (pathname.startsWith('/dashboard')) {
+  if (pathname.startsWith('/chat')) {
     // If user is not logged in, redirect to login page
     if (!token) {
       return NextResponse.redirect(new URL('/auth/login', request.url));
     }
-    // Otherwise, allow access to dashboard
+    // Otherwise, allow access to chat
     return NextResponse.next();
   }
   

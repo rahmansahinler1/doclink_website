@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 export default async function Home() {
   const session = await getServerSession();
 
-  // If the user is already logged in, redirect to the dashboard
+  // If the user is already logged in, redirect to the chat
   if (session && session.user) {
-    redirect('/dashboard');
+    redirect('/chat');
   }
 
   return (

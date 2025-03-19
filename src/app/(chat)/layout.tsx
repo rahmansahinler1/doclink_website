@@ -6,11 +6,11 @@ import DashboardHeader from '../../components/Dashboard/DashboardHeader';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Doclink Dashboard',
+  title: 'Doclink Chat',
   description: 'Manage your documents and chat with them',
 };
 
-export default async function DashboardLayout({
+export default async function ChatLayout({
   children,
 }: {
   children: React.ReactNode;
