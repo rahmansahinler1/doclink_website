@@ -37,7 +37,6 @@ export const authOptions: AuthOptions = {
           [account.providerAccountId]
         );
 
-        let userId: string;
         const isNewUser = rows.length === 0;
 
         if (isNewUser) {
@@ -55,13 +54,11 @@ export const authOptions: AuthOptions = {
               user.image
             ]
           );
-          userId = result.rows[0].user_id;
+          user.id = result.rows[0].user_id;
         } else {
-          userId = rows[0].user_id;
+          user.id = rows[0].user_id;
         }
 
-        // Attach userId to user object
-        user.id = userId;
         return true;
       } catch (error) {
         console.error('Authentication error:', error);
@@ -75,6 +72,7 @@ export const authOptions: AuthOptions = {
           // Generate sessionId only on initial token creation
           if (!token.sessionId) {
             const sessionId = uuidv4();
+            
             // Store session in Redis
             await redis.set(
               `user:${user.id}:session:${sessionId}`,
