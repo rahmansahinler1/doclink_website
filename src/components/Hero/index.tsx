@@ -28,8 +28,7 @@ const Hero = () => {
           const { valid } = await response.json();
     
           if (valid) {
-            // Redirect to our internal dashboard instead of external app
-            router.push('/dashboard');
+            router.push(`/chat/${session.sessionId}`);
           }
         } catch (error) {
           console.error('Session validation error:', error);
