@@ -1,12 +1,15 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import ScrollToTop from "@/components/ScrollToTop";
 import { Inter } from "next/font/google";
-import "node_modules/react-modal-video/css/modal-video.css";
-import "../styles/index.css";
 import { Providers } from "./providers";
+import "../styles/index.css";
 
+// Initialize Inter font
 const inter = Inter({ subsets: ["latin"] });
+
+export const metadata = {
+  title: "Doclink - AI Document Q&A",
+  description: "Ask questions about your documents using AI",
+  keywords: "AI, document analysis, question answering, document QA",
+};
 
 export default function RootLayout({
   children,
@@ -14,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning lang="en">
+    <html lang="en" suppressHydrationWarning>
       {/*
         <head /> will contain the components returned by the nearest parent
         head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
@@ -23,7 +26,10 @@ export default function RootLayout({
 
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
         <Providers>
-          {children}
+          {/* Main content */}
+          <main className="min-h-screen">
+            {children}
+          </main>
         </Providers>
       </body>
     </html>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth/next';
-import DashboardSidebar from '../../components/Dashboard/DashboardSidebar';
-import DashboardHeader from '../../components/Dashboard/DashboardHeader';
+import Sidebar from '@/components/doclink/Sidebar';
+import Header from '@/components/doclink/Header';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,22 +10,28 @@ export const metadata: Metadata = {
   description: 'Manage your documents and chat with them',
 };
 
-export default async function ChatLayout({
+// This is a temporary auth check until we implement proper authentication
+async function getUser() {
+  // This will be replaced with actual auth logic
+  return null;
+}
+
+export default async function DocLinkLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const user = await getUser();
 
-  if (!session || !session.user) {
-    redirect('/auth/login');
+  if (!user) {
+    redirect('/');
   }
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-900 text-white">
-      <DashboardSidebar />
+      <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <DashboardHeader />
+        <Header />
         <main className="flex-1 overflow-y-auto p-4">{children}</main>
       </div>
     </div>
