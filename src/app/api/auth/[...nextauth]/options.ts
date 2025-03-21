@@ -2,7 +2,7 @@ import type { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { query } from "@/app/lib/db";
 import { v4 as uuidv4 } from 'uuid';
-import { setSession, removeSession } from '@/app/lib/redis';
+import { setSession, removeSession, findExistingSession } from '@/app/lib/redis';
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -12,8 +12,9 @@ export const authOptions: AuthOptions = {
     }),
   ],
   pages: {
-    error: '/site/auth/error',
-    signIn: '/site',
+    error: '/auth/error',
+    signIn: '/',
+    signOut: '/',
   },
   callbacks: {
     async signIn({ user, account }) {
@@ -60,9 +61,18 @@ export const authOptions: AuthOptions = {
       if (account && user) {
         try {
           if (!token.sessionId) {
-            const sessionId = uuidv4();
-            await setSession(user.id, sessionId);
-            token.sessionId = sessionId;
+            const existingSessionId = await findExistingSession(user.id);
+            
+            if (existingSessionId) {
+              console.log(`Reusing existing session for user: ${user.id}`);
+              token.sessionId = existingSessionId;
+            } else {
+              const sessionId = uuidv4();
+              await setSession(user.id, sessionId);
+              token.sessionId = sessionId;
+            }
+          } else {
+            await setSession(user.id, token.sessionId);
           }
           
           token.userId = user.id;
