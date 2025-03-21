@@ -9,7 +9,6 @@ import Pricing from "@/components/Pricing";
 import Contact from "@/components/Contact";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
-import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: "Doclink",
@@ -17,13 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const session = await getServerSession();
-
-  // If the user is already logged in, redirect to the chat
-  if (session && session.user) {
-    redirect('/chat');
-  }
-
+  
   return (
     <>
       <ScrollUp />
