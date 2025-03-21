@@ -2,18 +2,25 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { handleGoogleSignIn } from "@/utils/auth";
 import { useRouter } from 'next/navigation';
 
 const Hero = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
+  const [isValidating, setIsValidating] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   useEffect(() => {
-    const validateAndRedirect = async () => {
-      if (session?.sessionId && session?.user?.id) {
+    // Only run validation if we have a session and aren't already validating
+    if ((status === 'authenticated') && session?.sessionId && session?.user?.id && !isValidating) {
+      const validateAndRedirect = async () => {
+        setIsValidating(true);
+        setValidationError(null);
+        
         try {
+          console.log("Hero component validating session:", session.sessionId);
           const response = await fetch('/api/auth/session/validate', {
             method: 'POST',
             headers: {
@@ -25,19 +32,30 @@ const Hero = () => {
             })
           });
     
+          if (!response.ok) {
+            throw new Error(`Server responded with ${response.status}`);
+          }
+          
           const { valid } = await response.json();
+          console.log("Session validation result:", valid);
     
           if (valid) {
+            console.log("Redirecting to chat route:", `/chat/${session.sessionId}`);
             router.push(`/chat/${session.sessionId}`);
+          } else {
+            setValidationError("Session validation failed");
           }
         } catch (error) {
           console.error('Session validation error:', error);
+          setValidationError(error instanceof Error ? error.message : "Unknown error");
+        } finally {
+          setIsValidating(false);
         }
-      }
-    };
+      };
 
-    validateAndRedirect();
-  }, [session, router]);
+      validateAndRedirect();
+    }
+  }, [session, status, router, isValidating]);
 
   return (
     <>
@@ -46,6 +64,12 @@ const Hero = () => {
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div className="mx-auto max-w-[800px] text-center">
+                {validationError && (
+                  <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+                    {validationError}
+                  </div>
+                )}
+                
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
                   Your AI Document Assistant
                 </h1>

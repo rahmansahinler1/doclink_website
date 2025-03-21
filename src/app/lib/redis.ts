@@ -64,4 +64,32 @@ export async function removeSession(userId: string, sessionId: string) {
     console.error('Redis remove session error:', error);
     throw error;
   }
+}
+
+// Find an existing session for a user
+export async function findExistingSession(userId: string): Promise<string | null> {
+  const redis = getRedisClient();
+  try {
+    // Get all keys matching the user's sessions
+    const sessionKeys = await redis.keys(`user:${userId}:session:*`);
+    
+    if (sessionKeys.length === 0) {
+      return null;
+    }
+
+    // Extract the sessionId from the first key found
+    // Format is user:{userId}:session:{sessionId}
+    const sessionKey = sessionKeys[0];
+    const sessionId = sessionKey.split(':').pop() || null;
+    
+    // If session exists, refresh its TTL
+    if (sessionId) {
+      await redis.expire(sessionKey, SESSION_TTL);
+    }
+    
+    return sessionId;
+  } catch (error) {
+    console.error('Redis find session error:', error);
+    return null;
+  }
 } 
