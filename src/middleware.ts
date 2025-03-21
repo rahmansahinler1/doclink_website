@@ -2,7 +2,6 @@
 import { getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { validateSession } from '@/app/lib/redis';
 
 export async function middleware(request: NextRequest) {
   // Only apply to /chat routes
@@ -10,26 +9,38 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const token = await getToken({ req: request });
+  console.log("Middleware running for path:", request.nextUrl.pathname);
+
+  // Parse the URL path segments
+  const pathSegments = request.nextUrl.pathname.split('/').filter(Boolean);
   
-  if (!token?.sessionId || !token?.userId) {
-    return NextResponse.redirect(new URL('/', request.url));
+  // Check if this is just /chat (without a session ID)
+  // In this case, we let the request pass through - Hero component will handle the redirection
+  if (pathSegments.length === 1 && pathSegments[0] === 'chat') {
+    console.log("Base chat path detected, passing through");
+    return NextResponse.next();
   }
 
-  // Validate session in Redis
   try {
-    const isValid = await validateSession(token.userId, token.sessionId);
-    if (!isValid) {
+    // For /chat/{sessionId} routes, we perform authentication check
+    const token = await getToken({ req: request });
+    console.log("Token retrieved:", token ? "Yes" : "No");
+    
+    // If no authentication token exists, redirect to landing page
+    if (!token || !token.userId) {
+      console.log("No token or userId found, redirecting to home");
       return NextResponse.redirect(new URL('/', request.url));
     }
+    
+    // Allow the request to proceed - the page component will handle all other checks
+    return NextResponse.next();
+    
   } catch (error) {
-    console.error('Session validation error:', error);
+    console.error("Error in middleware:", error);
     return NextResponse.redirect(new URL('/', request.url));
   }
-
-  return NextResponse.next();
 }
 
 export const config = {
-  matcher: '/chat/:path*'
+  matcher: ['/chat/:path*']
 }
