@@ -30,14 +30,17 @@ export default function Header() {
     setIsLoading(true);
     try {
       const success = await handleLogout();
-      // No need to handle redirect here as it's done in handleLogout
-      // Just handle the case where logout fails
-      if (!success) {
-        setIsLoading(false);
-      }
+      
+      // Always redirect to landing page after logout attempt
+      // Using window.location for a full page refresh to ensure all state is cleared
+      window.location.href = '/';
+      
     } catch (error) {
       console.error('Logout failed:', error);
       setIsLoading(false);
+      
+      // Still try to redirect on error
+      window.location.href = '/';
     }
   };
 
