@@ -1,32 +1,33 @@
+import ScrollUp from "@/components/Common/ScrollUp";
+import Hero from "@/components/Hero";
 import AboutSectionOne from "@/components/About/AboutSectionOne";
 import AboutSectionTwo from "@/components/About/AboutSectionTwo";
-import Blog from "@/components/Blog";
-import ScrollUp from "@/components/Common/ScrollUp";
-import Contact from "@/components/Contact";
 import Features from "@/components/Features";
-import Hero from "@/components/Hero";
-import Pricing from "@/components/Pricing";
-import Testimonials from "@/components/Testimonials";
 import Video from "@/components/Video";
+import Testimonials from "@/components/Testimonials";
+import Pricing from "@/components/Pricing";
+import Contact from "@/components/Contact";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth/next";
 
 export const metadata: Metadata = {
   title: "Doclink",
+  description: "Document question answering application",
 };
 
-export default function Home() {
+export default async function Home() {
+  
   return (
     <>
       <ScrollUp />
       <Hero />
       <Features />
-      <Video />
       <AboutSectionOne />
       <AboutSectionTwo />
+      <Video />
       <Testimonials />
       <Pricing />
-      <Blog />
       <Contact />
     </>
   );
-}
+} 

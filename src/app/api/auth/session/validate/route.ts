@@ -1,29 +1,38 @@
-// src/app/api/session/validate/route.ts
+// src/app/api/auth/session/validate/route.ts
 import { NextResponse } from "next/server";
-import Redis from "ioredis";
+import { validateSession } from "@/app/lib/redis";
 
-const redis = new Redis({
-  host: "localhost",
-  port: 6380,
-  db: 0
-});
+// Set to dynamic to avoid static optimization
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
+  console.log("Session validation API called");
+  
   try {
-    const { sessionId, userId } = await request.json();
+    const body = await request.json();
+    console.log("Request body:", body);
+    
+    const { sessionId, userId } = body;
     
     if (!sessionId || !userId) {
-      return NextResponse.json({ valid: false }, { status: 400 });
+      console.log("Missing parameters", { sessionId, userId });
+      return NextResponse.json(
+        { valid: false, error: 'Missing sessionId or userId' }, 
+        { status: 400 }
+      );
     }
 
-    // Check if session exists in Redis
-    const sessionExists = await redis.exists(`user:${userId}:session:${sessionId}`);
+    console.log("Validating session:", { userId, sessionId });
+    const isValid = await validateSession(userId, sessionId);
+    console.log("Validation result:", isValid);
     
-    return NextResponse.json({
-      valid: sessionExists === 1
-    });
+    return NextResponse.json({ valid: isValid });
+
   } catch (error) {
     console.error('Session validation error:', error);
-    return NextResponse.json({ valid: false }, { status: 500 });
+    return NextResponse.json(
+      { valid: false, error: 'Internal server error' }, 
+      { status: 500 }
+    );
   }
 }

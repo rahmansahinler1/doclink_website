@@ -2,16 +2,7 @@ import type { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { query } from "@/app/lib/db";
 import { v4 as uuidv4 } from 'uuid';
-import Redis from 'ioredis';
-
-// Initialize Redis client
-const redis = new Redis({
-  host: "localhost",
-  port: 6380,
-  db: 0
-});
-
-const SESSION_TTL = 259200; // 3 days in seconds
+import { setSession, removeSession, findExistingSession } from '@/app/lib/redis';
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -23,6 +14,7 @@ export const authOptions: AuthOptions = {
   pages: {
     error: '/auth/error',
     signIn: '/',
+    signOut: '/',
   },
   callbacks: {
     async signIn({ user, account }) {
@@ -31,13 +23,11 @@ export const authOptions: AuthOptions = {
       }
 
       try {
-        // Check if user exists
         const { rows } = await query(
           'SELECT * FROM user_info WHERE google_id = $1',
           [account.providerAccountId]
         );
 
-        let userId: string;
         const isNewUser = rows.length === 0;
 
         if (isNewUser) {
@@ -55,13 +45,11 @@ export const authOptions: AuthOptions = {
               user.image
             ]
           );
-          userId = result.rows[0].user_id;
+          user.id = result.rows[0].user_id;
         } else {
-          userId = rows[0].user_id;
+          user.id = rows[0].user_id;
         }
 
-        // Attach userId to user object
-        user.id = userId;
         return true;
       } catch (error) {
         console.error('Authentication error:', error);
@@ -72,23 +60,24 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user, account }) {
       if (account && user) {
         try {
-          // Generate sessionId only on initial token creation
           if (!token.sessionId) {
-            const sessionId = uuidv4();
-            // Store session in Redis
-            await redis.set(
-              `user:${user.id}:session:${sessionId}`,
-              'true',
-              'EX',
-              SESSION_TTL
-            );
-            token.sessionId = sessionId;
+            const existingSessionId = await findExistingSession(user.id);
+            
+            if (existingSessionId) {
+              console.log(`Reusing existing session for user: ${user.id}`);
+              token.sessionId = existingSessionId;
+            } else {
+              const sessionId = uuidv4();
+              await setSession(user.id, sessionId);
+              token.sessionId = sessionId;
+            }
+          } else {
+            await setSession(user.id, token.sessionId);
           }
           
           token.userId = user.id;
           token.accessToken = account.access_token;
           
-          // Check if new user
           const { rows } = await query(
             'SELECT * FROM user_info WHERE user_id = $1 AND user_created_at > NOW() - INTERVAL \'5 minutes\'',
             [user.id]
@@ -113,14 +102,11 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // Handle signout redirect
       if (url.startsWith(baseUrl)) {
-          return url;
+        return url;
       }
-      // Default to home page
       return baseUrl;
     },
-
   },
   
   events: {
@@ -128,8 +114,13 @@ export const authOptions: AuthOptions = {
       console.log(`User signed in: ${message.user.email}`);
     },
 
-    async signOut(message) {
-      console.log(`User signed out: ${message.token.email}`);
-  }
+    async signOut({ token }) {
+      try {
+        await removeSession(token.userId, token.sessionId);
+        console.log(`User signed out: ${token.email}`);
+      } catch (error) {
+        console.error('Session removal error:', error);
+      }
+    }
   }
 };
