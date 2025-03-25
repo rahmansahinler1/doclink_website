@@ -2,11 +2,15 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Header from "@/components/doclink/Header";
+import Sidebar from "@/components/doclink/Sidebar";
+import ChatInterface from "@/components/doclink/ChatInterface";
 
 export default function ChatPage({ params }: { params: { sessionId: string } }) {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   
   // Debug logging
   useEffect(() => {
@@ -23,24 +27,32 @@ export default function ChatPage({ params }: { params: { sessionId: string } }) 
   // Show loading state while session is loading or redirecting
   if (status === "loading" || status === "unauthenticated") {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen bg-gray-50 dark:bg-gray-900">
         {status === "loading" ? "Loading session..." : "Redirecting to login..."}
       </div>
     );
   }
 
-  // Simple content to ensure the page works
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">Chat Session</h1>
-      <div className="bg-gray-100 p-4 rounded-lg mb-4">
-        <p><strong>Session ID:</strong> {params.sessionId}</p>
-        <p><strong>User:</strong> {session?.user?.name || 'Unknown'}</p>
-        <p><strong>Email:</strong> {session?.user?.email || 'Unknown'}</p>
+    <div className="flex h-screen bg-white dark:bg-gray-900">
+      {/* Sidebar */}
+      <div className={`${isSidebarOpen ? 'w-64' : 'w-0'} transition-all duration-300 overflow-hidden border-r border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800`}>
+        <Sidebar onToggle={toggleSidebar} />
       </div>
-      <div className="mt-8">
-        <h2 className="text-xl font-bold mb-2">This is a placeholder chat interface</h2>
-        <p>Your chat application will be implemented here</p>
+
+      {/* Main Content */}
+      <div className="flex flex-col flex-1 overflow-hidden">
+        {/* Header */}
+        <Header toggleSidebar={toggleSidebar} sessionId={params.sessionId} />
+        
+        {/* Chat Interface */}
+        <div className="flex-1 overflow-hidden">
+          <ChatInterface sessionId={params.sessionId} />
+        </div>
       </div>
     </div>
   );

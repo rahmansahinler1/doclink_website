@@ -3,8 +3,14 @@
 import { useState, useEffect } from 'react';
 import { getSession, handleLogout } from '@/utils/auth';
 import { useRouter } from 'next/navigation';
+import { Bars3Icon, PlusIcon } from '@heroicons/react/24/outline';
 
-export default function Header() {
+interface HeaderProps {
+  toggleSidebar: () => void;
+  sessionId: string;
+}
+
+export default function Header({ toggleSidebar, sessionId }: HeaderProps) {
   const router = useRouter();
   const [user, setUser] = useState({
     name: '',
@@ -45,25 +51,33 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-gray-800 text-white h-16 flex items-center justify-between px-6 border-b border-gray-700">
-      {/* Session Info */}
-      <div className="flex items-center space-x-4">
-        <span className="text-sm text-gray-400">Session Active</span>
-      </div>
-
-      {/* User Menu */}
-      <div className="flex items-center space-x-4">
-        <div className="text-sm">
-          <div className="font-medium">{user.name}</div>
-          <div className="text-gray-400">{user.email}</div>
+    <header className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+      <div className="flex items-center justify-between h-12 px-3">
+        {/* Left side - Sidebar toggle and model selector */}
+        <div className="flex items-center">
+          <button 
+            onClick={toggleSidebar}
+            className="inline-flex items-center justify-center rounded-md p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white focus:outline-none"
+          >
+            <Bars3Icon className="h-5 w-5" />
+          </button>
+          
+          <div className="ml-2 relative">
+            <button className="text-sm font-medium text-gray-900 dark:text-white flex items-center gap-1 rounded-md px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700">
+              Doclink
+              <svg className="h-4 w-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
         </div>
-        <button 
-          className="text-gray-400 hover:text-white disabled:opacity-50"
-          onClick={onLogout}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Logging out...' : 'Logout'}
-        </button>
+
+        {/* Right side - User controls */}
+        <div className="flex items-center space-x-2">
+          <button className="text-gray-700 dark:text-gray-300 text-sm px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+            <PlusIcon className="h-5 w-5" />
+          </button>
+        </div>
       </div>
     </header>
   );
